@@ -5,6 +5,7 @@ Test cases for Account Model
 import logging
 import unittest
 import os
+from datetime import date
 from service import app
 from service.models import Account, DataValidationError, db
 from tests.factories import AccountFactory
@@ -152,6 +153,15 @@ class TestAccount(unittest.TestCase):
         self.assertEqual(serial_account["address"], account.address)
         self.assertEqual(serial_account["phone_number"], account.phone_number)
         self.assertEqual(serial_account["date_joined"], str(account.date_joined))
+
+    def test_deserialize_date_to_todya_if_not_provided(self):
+        account = AccountFactory()
+        serial_account = account.serialize()
+        serial_account['date_joined']=None
+        new_account = Account()
+        new_account.deserialize(serial_account)
+        self.assertEqual(new_account.date_joined, date.today())
+        
 
     def test_deserialize_an_account(self):
         """It should Deserialize an account"""
