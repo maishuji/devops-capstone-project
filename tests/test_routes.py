@@ -155,7 +155,7 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "Updated Name")
-    
+
     def test_update_non_existing_account(self):
         """It should not Update an existing account"""
         test_account = AccountFactory()
@@ -171,7 +171,6 @@ class TestAccountService(TestCase):
 
     def test_delete_non_existing_account(self):
         """It should not found an Account to delete and not give error"""
-        account = self._create_accounts(1)[0]
         resp = self.client.delete(f"{BASE_URL}/42")
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -200,7 +199,7 @@ class TestAccountService(TestCase):
         }
         for key, value in headers.items():
             self.assertEqual(response.headers.get(key), value)
-    
+
     def test_cors_security(self):
         """It should return a CORS header"""
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
