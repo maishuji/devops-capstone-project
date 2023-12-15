@@ -157,11 +157,10 @@ class TestAccount(unittest.TestCase):
     def test_deserialize_date_to_todya_if_not_provided(self):
         account = AccountFactory()
         serial_account = account.serialize()
-        serial_account['date_joined']=None
+        serial_account['date_joined'] = None
         new_account = Account()
         new_account.deserialize(serial_account)
         self.assertEqual(new_account.date_joined, date.today())
-        
 
     def test_deserialize_an_account(self):
         """It should Deserialize an account"""
